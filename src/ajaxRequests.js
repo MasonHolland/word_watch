@@ -2,15 +2,10 @@ var $ = require('jquery')
 var api = 'https://wordwatch-api.herokuapp.com'
 
 class AjaxRequests {
-  // constuctor(apiUrl) {
-  //   this.apiUrl = 'https://wordwatch-api.herokuapp.com'
-  // }
 
-  static retrieveTopWord() {
-    debugger;
-    $.get( api + '/api/v1/top_word');
-    debugger;
-  };
+  static postWordCount(wordOccurence) {
+    $.post( api + '/api/v1/words', { word: { value: wordOccurence } })
+  }
 };
 
 module.exports = AjaxRequests

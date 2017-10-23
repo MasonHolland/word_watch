@@ -12,18 +12,6 @@ class WatchEvents {
    })
   }
 
-  static breakDown(data) {
-    var allWords = WatchEvents.filterBlock(data)
-    var wordCounts = {};
-    allWords.forEach(function(word) {
-      if (wordCounts[word] !== undefined)
-        { wordCounts[word]++; }
-      else
-        { wordCounts[word] = 1; }
-    })
-    WatchEvents.createWordMap(wordCounts);
-  }
-
   static filterBlock(blockOfText) {
     var noPunctuation = blockOfText.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
     var allWords = noPunctuation.split(" ").map(function(word) {
@@ -32,9 +20,31 @@ class WatchEvents {
     return allWords
   }
 
+  static breakDown(data) {
+    var allWords = WatchEvents.filterBlock(data)
+    var wordCounts = {};
+    allWords.forEach(function(word) {
+      if (wordCounts[word] !== undefined) {
+        wordCounts[word]++;
+        Ajax.postWordCount(word);
+      } else {
+        wordCounts[word] = 1;
+        Ajax.postWordCount(word);
+      }
+    })
+    WatchEvents.createWordMap(wordCounts);
+    // $.post( api + '/api/v1/words', { word: wordCounts })
+  }
+
   static createWordMap(wordCounts) {
     Object.entries(wordCounts).forEach(function(wordCount) {
-      $('.word-count').append("<p style='font-size:" + wordCount[1] + "em'>" + wordCount[0] + "</p>")
+      $('.word-count')
+      .append(
+        "<p style='font-size:"
+        + wordCount[1]
+        + "em'>"
+        + wordCount[0]
+        + "</p>")
     })
   }
 }
