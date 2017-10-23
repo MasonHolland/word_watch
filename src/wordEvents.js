@@ -21,8 +21,7 @@ class WatchEvents {
       else
         { wordCounts[word] = 1; }
     })
-    debugger;
-    return wordCounts;
+    WatchEvents.createWordMap(wordCounts);
   }
 
   static filterBlock(blockOfText) {
@@ -31,6 +30,12 @@ class WatchEvents {
       return word.toLowerCase();
     })
     return allWords
+  }
+
+  static createWordMap(wordCounts) {
+    Object.entries(wordCounts).forEach(function(wordCount) {
+      $('.word-count').append("<p style='font-size:" + wordCount[1] + "em'>" + wordCount[0] + "</p>")
+    })
   }
 }
 
