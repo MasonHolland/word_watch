@@ -13,18 +13,24 @@ class WatchEvents {
   }
 
   static breakDown(data) {
-    var noPunctuation = data.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
-    var allWords = noPunctuation.split(" ");
+    var allWords = WatchEvents.filterBlock(data)
     var wordCounts = {};
     allWords.forEach(function(word) {
-      var filtered = word.toLowerCase();
-      if (wordCounts[filtered] !== undefined) {
-        wordCounts[filtered]++;
-      } else {
-        wordCounts[filtered] = 1;
-      }
+      if (wordCounts[word] !== undefined)
+        { wordCounts[word]++; }
+      else
+        { wordCounts[word] = 1; }
     })
     debugger;
+    return wordCounts;
+  }
+
+  static filterBlock(blockOfText) {
+    var noPunctuation = blockOfText.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
+    var allWords = noPunctuation.split(" ").map(function(word) {
+      return word.toLowerCase();
+    })
+    return allWords
   }
 }
 
