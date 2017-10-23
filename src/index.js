@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // have fun!
-})
+var topWord = require('../wordEvents')
 
+document.addEventListener("DOMContentLoaded", () => {
+  topWord()
+})
